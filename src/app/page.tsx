@@ -1,4 +1,4 @@
-import { db } from '@/lib/db';
+import { db } from '../lib/db';
 import Link from 'next/link';
 
 export const revalidate = 60; // Revalida o cache a cada 60 segundos
