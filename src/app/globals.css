@@ -1179,4 +1179,8 @@ footer {
 }
 
 @media(max-width:560px) {
-  .trending-row { grid-templat
+  .trending-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-title { font-size: 1.75rem; }
+  .feat-title { font-size: 1.7rem; }
+}
