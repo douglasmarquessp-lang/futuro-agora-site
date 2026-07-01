@@ -107,10 +107,10 @@ export default function RootLayout({
               </p>
               <div className="f-soc">
   <a href="https://x.com/DouglasMarkes1" target="_blank" className="soc-btn">𝕏</a>
-  <a href="https://facebook.com/seu_usuario" target="_blank" className="soc-btn">f</a>
-  <a href="https://instagram.com/seu_usuario" target="_blank" className="soc-btn">📸</a>
-  <a href="https://youtube.com/seu_canal" target="_blank" className="soc-btn">▶</a>
-  <a href="https://wa.me/seu_numero" target="_blank" className="soc-btn">💬</a>
+  <a href="https://www.facebook.com/share/1HBmFNkcdU/" target="_blank" className="soc-btn">f</a>
+  <a href="https://www.instagram.com/futuroagora.tech?igsh=MXQwdjhqOXQzODFnYQ==" target="_blank" className="soc-btn">📸</a>
+  <a href="https://youtube.com/@cienciatecnologia8897?si=_4xxcwnl4c_P_W-l" target="_blank" className="soc-btn">▶</a>
+  <a href="https://wa.me/+5511933320948" target="_blank" className="soc-btn">💬</a>
 </div>
             </div>
             <div className="fc">
