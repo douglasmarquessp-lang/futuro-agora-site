@@ -136,7 +136,7 @@ export default function RootLayout({
               <div className="f-col-ttl">Legal</div>
               <ul className="f-links">
                 <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
-                <li><a href="#">Termos de Uso</a></li>
+                <li><a href="/termos-de-uso">Termos de Uso</a></li>
                 <li><a href="/politica-de-cookies">Política de Cookies</a></li>
                 <li><a href="#">LGPD</a></li>
               </ul>
