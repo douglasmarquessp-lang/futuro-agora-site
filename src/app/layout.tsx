@@ -126,7 +126,7 @@ export default function RootLayout({
             <div className="fc">
               <div className="f-col-ttl">Site</div>
               <ul className="f-links">
-                <li><a href="#">Sobre nós</a></li>
+                <li><a href="/sobre-nos">Sobre nós</a></li>
                 <li><a href="#">Contato</a></li>
                 <li><a href="#">Newsletter</a></li>
                 <li><a href="#">Anuncie aqui</a></li>
