@@ -1,6 +1,7 @@
 import { db } from '../../lib/db';
 import { revalidatePath } from 'next/cache';
 
+// Ação para criar artigos
 async function createArticleAction(formData: FormData) {
   'use server';
 
@@ -31,6 +32,22 @@ async function createArticleAction(formData: FormData) {
   });
 
   revalidatePath('/');
+  revalidatePath('/admin');
+}
+
+// Nova ação para excluir artigos
+async function deleteArticleAction(formData: FormData) {
+  'use server';
+
+  const id = formData.get('id') as string;
+  if (!id) return;
+
+  await db.article.delete({
+    where: { id },
+  });
+
+  revalidatePath('/');
+  revalidatePath('/admin');
 }
 
 export default async function AdminPage() {
@@ -43,6 +60,7 @@ export default async function AdminPage() {
       <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', marginBottom: '20px' }}>Painel Administrativo</h1>
 
       <div className="two-col">
+        {/* Formulário de criação */}
         <div className="col-main" style={{ padding: '30px', background: '#fff' }}>
           <h2 style={{ fontFamily: 'var(--font-bebas)', fontSize: '1.5rem', marginBottom: '20px' }}>Novo Artigo</h2>
           <form action={createArticleAction}>
@@ -94,13 +112,24 @@ export default async function AdminPage() {
           </form>
         </div>
 
+        {/* Listagem de artigos ativos com botão de excluir */}
         <div className="col-side" style={{ padding: '20px', background: 'var(--warm)' }}>
           <h2 style={{ fontFamily: 'var(--font-bebas)', fontSize: '1.5rem', marginBottom: '15px' }}>Artigos Ativos ({articles.length})</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {articles.map((art) => (
-              <div key={art.id} style={{ borderBottom: '1px solid var(--border)', paddingBottom: '10px' }}>
-                <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 800, color: 'var(--red)' }}>{art.category}</span>
-                <p style={{ fontSize: '0.85rem', fontWeight: 700, margin: '2px 0' }}>{art.title}</p>
+              <div key={art.id} style={{ borderBottom: '1px solid var(--border)', paddingBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px' }}>
+                <div>
+                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 800, color: 'var(--red)' }}>{art.category}</span>
+                  <p style={{ fontSize: '0.85rem', fontWeight: 700, margin: '2px 0' }}>{art.title}</p>
+                </div>
+                
+                {/* Botão de Excluir */}
+                <form action={deleteArticleAction}>
+                  <input type="hidden" name="id" value={art.id} />
+                  <button type="submit" style={{ background: 'var(--red)', color: '#fff', border: 'none', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 800, cursor: 'pointer' }}>
+                    Excluir
+                  </button>
+                </form>
               </div>
             ))}
           </div>
