@@ -106,12 +106,12 @@ export default function RootLayout({
                 IA, Tecnologia e Ciência explicados de forma simples para o povo brasileiro. O futuro está acontecendo agora — fique por dentro.
               </p>
               <div className="f-soc">
-                <div className="soc-btn">𝕏</div>
-                <div className="soc-btn">f</div>
-                <div className="soc-btn">📸</div>
-                <div className="soc-btn">▶</div>
-                <div className="soc-btn">💬</div>
-              </div>
+  <a href="https://x.com/DouglasMarkes1" target="_blank" className="soc-btn">𝕏</a>
+  <a href="https://facebook.com/seu_usuario" target="_blank" className="soc-btn">f</a>
+  <a href="https://instagram.com/seu_usuario" target="_blank" className="soc-btn">📸</a>
+  <a href="https://youtube.com/seu_canal" target="_blank" className="soc-btn">▶</a>
+  <a href="https://wa.me/seu_numero" target="_blank" className="soc-btn">💬</a>
+</div>
             </div>
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
