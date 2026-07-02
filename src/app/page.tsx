@@ -52,4 +52,109 @@ export default async function HomePage() {
             </div>
           </Link>
         ) : (
-          <div className="hero-main" style={{ padding: '40px', color: '#fff', background: '
+          <div className="hero-main" style={{ padding: '40px', color: '#fff', background: 'var(--ink)' }}>
+            Nenhum artigo publicado no momento. Visite o painel de administração para cadastrar novas notícias.
+          </div>
+        )}
+
+        <div className="hero-side">
+          {sideArticles.map((art, index) => (
+            <Link key={art.id} href={`/artigo/${art.slug}`} className="side-item">
+              <div className="side-num" style={{ fontFamily: 'var(--font-bebas)' }}>{`0${index + 2}`}</div>
+              <div className="side-cat">{art.category}</div>
+              <div className="side-title">{art.title}</div>
+              <div className="side-meta">
+                <span>{new Date(art.createdAt).toLocaleDateString('pt-BR')}</span>
+                <span className="read-badge">{art.readTime}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Seção Trending */}
+      {trendingArticles.length > 0 && (
+        <>
+          <div className="sec-head">
+            <div className="sec-title" style={{ fontFamily: 'var(--font-bebas)' }}>TRENDING AGORA</div>
+            <div className="sec-line"></div>
+          </div>
+          <div className="trending-box">
+            <div className="trending-hd">
+              <h2><span className="live-pulse"></span>Mais lidas agora</h2>
+            </div>
+            <div className="trending-row">
+              {trendingArticles.map((art, idx) => (
+                <Link key={art.id} href={`/artigo/${art.slug}`} className="t-card">
+                  <div className="t-num" style={{ fontFamily: 'var(--font-bebas)' }}>{`0${idx + 1}`}</div>
+                  <div className="t-cat">{art.category}</div>
+                  <div className="t-title">{art.title}</div>
+                  <div className="t-views">👁 {art.views} visualizações</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Seção Últimas Notícias */}
+      <div className="sec-head">
+        <div className="sec-title" style={{ fontFamily: 'var(--font-bebas)' }}>ÚLTIMAS NOTÍCIAS</div>
+        <div className="sec-line"></div>
+      </div>
+
+      <div className="two-col">
+        <div className="col-main">
+          <div className="col-head">Notícias Recentes <em>•</em></div>
+          {remainingArticles.length > 0 ? (
+            remainingArticles.map((art) => (
+              <Link key={art.id} href={`/artigo/${art.slug}`} className="art-row">
+                <div className="art-thumb th2">{art.emoji}</div>
+                <div className="art-info">
+                  <div className="art-cat">{art.category}</div>
+                  <div className="art-title">{art.title}</div>
+                  <div className="art-meta">{new Date(art.createdAt).toLocaleDateString('pt-BR')} · {art.readTime} · 👁 {art.views}</div>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div style={{ padding: '24px', fontStyle: 'italic', color: 'var(--muted)' }}>
+              Nenhum outro artigo listado.
+            </div>
+          )}
+        </div>
+
+        <div className="col-side">
+          <div className="widget">
+            <div className="wid-nl">
+              <h3>📬 NEWSLETTER</h3>
+              <p>Receba as principais notícias de IA e tecnologia todo dia. Grátis.</p>
+              <input type="email" className="nl-in" placeholder="Seu melhor e-mail" />
+              <button className="nl-btn">Quero receber ⚡</button>
+            </div>
+          </div>
+
+          <div className="widget">
+            <div className="wid-head" style={{ fontFamily: 'var(--font-bebas)' }}>🔥 Mais compartilhadas</div>
+            <div className="wid-body">
+              <div className="sh-item">
+                <div className="sh-num" style={{ fontFamily: 'var(--font-bebas)' }}>1</div>
+                <div>
+                  <div className="sh-title">IA vai substituir sua profissão? Veja a lista completa</div>
+                  <div className="sh-cnt">📤 4.2k compartilhamentos</div>
+                </div>
+              </div>
+              <div className="sh-item">
+                <div className="sh-num" style={{ fontFamily: 'var(--font-bebas)' }}>2</div>
+                <div>
+                  <div className="sh-title">Computação quântica explicada para leigos</div>
+                  <div className="sh-cnt">📤 3.8k compartilhamentos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
