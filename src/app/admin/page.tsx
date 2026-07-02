@@ -7,7 +7,7 @@ import Link from 'next/link';
 async function saveArticleAction(formData: FormData) {
   'use server';
 
-  const id = formData.get('id') as string; // Campo oculto para controle
+  const id = formData.get('id') as string;
   const title = formData.get('title') as string;
   const slug = formData.get('slug') as string;
   const excerpt = formData.get('excerpt') as string;
@@ -35,13 +35,11 @@ async function saveArticleAction(formData: FormData) {
   };
 
   if (id) {
-    // Modo Edição: Atualiza os dados existentes
     await db.article.update({
       where: { id },
       data: articleData,
     });
   } else {
-    // Modo Criação: Cria um novo registro
     await db.article.create({
       data: articleData,
     });
@@ -49,7 +47,7 @@ async function saveArticleAction(formData: FormData) {
 
   revalidatePath('/');
   revalidatePath('/admin');
-  redirect('/admin'); // Limpa o ID da URL e redefine o formulário
+  redirect('/admin');
 }
 
 // Ação para excluir artigos
@@ -68,17 +66,12 @@ async function deleteArticleAction(formData: FormData) {
   redirect('/admin');
 }
 
-interface AdminPageProps {
-  searchParams: { id?: string };
-}
-
-export default async function AdminPage({ searchParams }: AdminPageProps) {
+export default async function AdminPage({ searchParams }: any) {
   const articles = await db.article.findMany({
     orderBy: { createdAt: 'desc' },
   });
 
-  // Verifica se há uma solicitação de edição ativa vinda da URL
-  const editId = searchParams.id;
+  const editId = searchParams?.id;
   let editArticle = null;
   
   if (editId) {
@@ -101,7 +94,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </h2>
           
           <form action={saveArticleAction}>
-            {/* Campo oculto com ID do artigo sendo editado */}
             <input type="hidden" name="id" value={editArticle?.id || ''} />
 
             <div className="form-group">
@@ -167,7 +159,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </form>
         </div>
 
-        {/* Listagem de artigos com opções de exclusão e edição */}
+        {/* Listagem de artigos ativos */}
         <div className="col-side" style={{ padding: '20px', background: 'var(--warm)' }}>
           <h2 style={{ fontFamily: 'var(--font-bebas)', fontSize: '1.5rem', marginBottom: '15px' }}>Artigos Ativos ({articles.length})</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -177,12 +169,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 <p style={{ fontSize: '0.85rem', fontWeight: 700, margin: '2px 0 6px 0' }}>{art.title}</p>
                 
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  {/* Botão de Editar (Carrega dados na URL) */}
                   <Link href={`/admin?id=${art.id}`} className="admin-btn" style={{ background: 'var(--cyan)', color: 'var(--ink)', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 800, textDecoration: 'none' }}>
                     Editar
                   </Link>
 
-                  {/* Formulário de Excluir */}
                   <form action={deleteArticleAction} style={{ margin: '0' }}>
                     <input type="hidden" name="id" value={art.id} />
                     <button type="submit" style={{ background: 'var(--red)', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 800, cursor: 'pointer' }}>
@@ -197,4 +187,4 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
       </div>
     </div>
   );
-                  }
+}
