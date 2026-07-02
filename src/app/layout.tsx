@@ -110,7 +110,7 @@ export default function RootLayout({
   <a href="https://www.facebook.com/share/1HBmFNkcdU/" target="_blank" className="soc-btn">f</a>
   <a href="https://www.instagram.com/futuroagora.tech?igsh=MXQwdjhqOXQzODFnYQ==" target="_blank" className="soc-btn">📸</a>
   <a href="https://youtube.com/@cienciatecnologia8897?si=_4xxcwnl4c_P_W-l" target="_blank" className="soc-btn">▶</a>
-  <a href="https://wa.me/+5511933320948" target="_blank" className="soc-btn">💬</a>
+  <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
 </div>
             </div>
             <div className="fc">
@@ -129,7 +129,7 @@ export default function RootLayout({
                 <li><a href="/sobre-nos">Sobre nós</a></li>
                 <li><a href="/contato">Contato</a></li>
                 <li><a href="#">Newsletter</a></li>
-                <li><a href="#">Anuncie aqui</a></li>
+                <li><a href="/anuncie-aqui">Anuncie aqui</a></li>
               </ul>
             </div>
             <div className="fc">
