@@ -15,6 +15,7 @@ model Article {
   content     String
   category    String
   emoji       String   @default("⚡")
+  imageUrl    String?  // <--
   views       Int      @default(0)
   shares      Int      @default(0)
   isFeatured  Boolean  @default(false)
