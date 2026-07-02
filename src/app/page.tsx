@@ -5,6 +5,7 @@ export const revalidate = 10;
 
 export default async function HomePage() {
   const articles = await db.article.findMany({
+    where: { published: true }, // <-- ADICIONADO: Filtra e oculta rascunhos da Home
     orderBy: { createdAt: 'desc' },
   });
 
@@ -26,7 +27,6 @@ export default async function HomePage() {
       <div className="hero-grid">
         {featured ? (
           <Link href={`/artigo/${featured.slug}`} className="hero-main">
-            {/* Bloco de Imagem com suporte a foto de capa */}
             {featured.imageUrl ? (
               <div className="hero-img" style={{ backgroundImage: `url(${featured.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                 <div className="hero-tag"><span className="live-pulse"></span>Destaque</div>
@@ -72,7 +72,6 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Seção Trending */}
       {trendingArticles.length > 0 && (
         <>
           <div className="sec-head">
@@ -97,7 +96,6 @@ export default async function HomePage() {
         </>
       )}
 
-      {/* Seção Últimas Notícias */}
       <div className="sec-head">
         <div className="sec-title" style={{ fontFamily: 'var(--font-bebas)' }}>ÚLTIMAS NOTÍCIAS</div>
         <div className="sec-line"></div>
