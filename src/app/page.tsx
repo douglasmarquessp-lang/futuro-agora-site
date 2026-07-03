@@ -5,7 +5,7 @@ export const revalidate = 10;
 
 export default async function HomePage() {
   const articles = await db.article.findMany({
-    where: { published: true }, // <-- ADICIONADO: Filtra e oculta rascunhos da Home
+    where: { published: true },
     orderBy: { createdAt: 'desc' },
   });
 
@@ -72,6 +72,7 @@ export default async function HomePage() {
         </div>
       </div>
 
+      {/* Seção Trending */}
       {trendingArticles.length > 0 && (
         <>
           <div className="sec-head">
@@ -96,6 +97,7 @@ export default async function HomePage() {
         </>
       )}
 
+      {/* Seção Últimas Notícias */}
       <div className="sec-head">
         <div className="sec-title" style={{ fontFamily: 'var(--font-bebas)' }}>ÚLTIMAS NOTÍCIAS</div>
         <div className="sec-line"></div>
@@ -107,7 +109,25 @@ export default async function HomePage() {
           {remainingArticles.length > 0 ? (
             remainingArticles.map((art) => (
               <Link key={art.id} href={`/artigo/${art.slug}`} className="art-row">
-                <div className="art-thumb th2">{art.emoji}</div>
+                
+                {/* Miniatura inteligente (Foto de capa ou Emoji se não tiver foto) */}
+                {art.imageUrl ? (
+                  <div 
+                    className="art-thumb" 
+                    style={{ 
+                      width: '86px', 
+                      height: '64px', 
+                      borderRadius: '4px', 
+                      backgroundImage: `url(${art.imageUrl})`, 
+                      backgroundSize: 'cover', 
+                      backgroundPosition: 'center', 
+                      flexShrink: 0 
+                    }}
+                  />
+                ) : (
+                  <div className="art-thumb th2">{art.emoji}</div>
+                )}
+                
                 <div className="art-info">
                   <div className="art-cat">{art.category}</div>
                   <div className="art-title">{art.title}</div>
@@ -155,4 +175,4 @@ export default async function HomePage() {
       </div>
     </div>
   );
-}
+                }
