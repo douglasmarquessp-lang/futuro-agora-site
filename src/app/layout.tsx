@@ -1,5 +1,7 @@
 import './globals.css';
 import { Bebas_Neue, Plus_Jakarta_Sans, Lora } from 'next/font/google';
+import { db } from '../lib/db';
+import Link from 'next/link';
 
 const bebasNeue = Bebas_Neue({
   weight: '400',
@@ -26,25 +28,43 @@ export const metadata = {
   description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Puxa as 5 últimas notícias publicadas para o letreiro do topo
+  const tickerArticles = await db.article.findMany({
+    where: { published: true },
+    take: 5,
+    orderBy: { createdAt: 'desc' },
+  }).catch(() => []);
+
+  // Letreiros padrão caso o banco esteja vazio
+  const tickerItems = tickerArticles.length > 0 
+    ? tickerArticles.map(a => a.title)
+    : [
+        "Google I/O 2026 — IA por voz chega ao Gmail e Docs",
+        "Microsoft lança 3 modelos próprios de IA contra OpenAI",
+        "Brasil anuncia plano de R$ 23 bilhões em Inteligência Artificial"
+      ];
+
   return (
     <html lang="pt-BR" className={`${bebasNeue.variable} ${plusJakartaSans.variable} ${lora.variable}`}>
       <body style={{ fontFamily: 'var(--font-jakarta)' }}>
-        {/* TOP BAR */}
+        
+        {/* LETREIRO DINÂMICO AUTOMÁTICO */}
         <div className="topbar">
           <span className="topbar-date">📅 Maio 2026</span>
           <div className="topbar-scroll">
             <div className="ticker-wrap">
-              <span>Google I/O 2026 — IA por voz chega ao Gmail e Docs</span>
-              <span>Microsoft lança 3 modelos próprios de IA contra OpenAI</span>
-              <span>OpenAI economiza US$ 97 bilhões em novo acordo</span>
-              <span>IA transforma eleições brasileiras de 2026</span>
-              <span>Computação quântica bate recorde mundial no MIT</span>
-              <span>Brasil anuncia plano de R$ 23 bilhões em Inteligência Artificial</span>
+              {tickerItems.map((text, idx) => (
+                <span key={idx}>{text}</span>
+              ))}
+              {/* Repete os itens para manter o efeito de rolagem infinita */}
+              {tickerItems.map((text, idx) => (
+                <span key={`rep-${idx}`}>{text}</span>
+              ))}
             </div>
           </div>
           <span className="topbar-right">🔴 AO VIVO</span>
@@ -60,7 +80,7 @@ export default function RootLayout({
               </div>
             </div>
             <ul className="nav-links">
-              <li><a href="/" className="act">Início</a></li>
+              <li><Link href="/">Início</Link></li>
               <li><a href="#">🤖 IA</a></li>
               <li><a href="#">💻 Tecnologia</a></li>
               <li><a href="#">⚛️ Ciência</a></li>
@@ -106,12 +126,12 @@ export default function RootLayout({
                 IA, Tecnologia e Ciência explicados de forma simples para o povo brasileiro. O futuro está acontecendo agora — fique por dentro.
               </p>
               <div className="f-soc">
-  <a href="https://x.com/DouglasMarkes1" target="_blank" className="soc-btn">𝕏</a>
-  <a href="https://www.facebook.com/share/1HBmFNkcdU/" target="_blank" className="soc-btn">f</a>
-  <a href="https://www.instagram.com/futuroagora.tech?igsh=MXQwdjhqOXQzODFnYQ==" target="_blank" className="soc-btn">📸</a>
-  <a href="https://youtube.com/@cienciatecnologia8897?si=_4xxcwnl4c_P_W-l" target="_blank" className="soc-btn">▶</a>
-  <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
-</div>
+                <a href="https://x.com/DouglasMarkes1" target="_blank" className="soc-btn">𝕏</a>
+                <a href="https://www.facebook.com/share/1HBmFNkcdU/" target="_blank" className="soc-btn">f</a>
+                <a href="https://www.instagram.com/futuroagora.tech" target="_blank" className="soc-btn">📸</a>
+                <a href="https://youtube.com/@cienciatecnologia8897" target="_blank" className="soc-btn">▶</a>
+                <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
+              </div>
             </div>
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
@@ -126,19 +146,19 @@ export default function RootLayout({
             <div className="fc">
               <div className="f-col-ttl">Site</div>
               <ul className="f-links">
-                <li><a href="/sobre-nos">Sobre nós</a></li>
-                <li><a href="/contato">Contato</a></li>
+                <li><Link href="/sobre-nos">Sobre nós</Link></li>
+                <li><Link href="/contato">Contato</Link></li>
                 <li><a href="#">Newsletter</a></li>
-                <li><a href="/anuncie-aqui">Anuncie aqui</a></li>
+                <li><Link href="/anuncie-aqui">Anuncie aqui</Link></li>
               </ul>
             </div>
             <div className="fc">
               <div className="f-col-ttl">Legal</div>
               <ul className="f-links">
-                <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
-                <li><a href="/termos-de-uso">Termos de Uso</a></li>
-                <li><a href="/politica-de-cookies">Política de Cookies</a></li>
-                <li><a href="/lgpd">LGPD</a></li>
+                <li><Link href="/politica-de-privacidade">Política de Privacidade</Link></li>
+                <li><Link href="/termos-de-uso">Termos de Uso</Link></li>
+                <li><Link href="/politica-de-cookies">Política de Cookies</Link></li>
+                <li><Link href="/lgpd">LGPD</Link></li>
               </ul>
             </div>
           </div>
