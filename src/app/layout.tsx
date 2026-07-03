@@ -33,14 +33,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Puxa as 5 últimas notícias publicadas para o letreiro do topo
   const tickerArticles = await db.article.findMany({
     where: { published: true },
     take: 5,
     orderBy: { createdAt: 'desc' },
   }).catch(() => []);
 
-  // Letreiros padrão caso o banco esteja vazio
   const tickerItems = tickerArticles.length > 0 
     ? tickerArticles.map(a => a.title)
     : [
@@ -61,7 +59,6 @@ export default async function RootLayout({
               {tickerItems.map((text, idx) => (
                 <span key={idx}>{text}</span>
               ))}
-              {/* Repete os itens para manter o efeito de rolagem infinita */}
               {tickerItems.map((text, idx) => (
                 <span key={`rep-${idx}`}>{text}</span>
               ))}
@@ -79,17 +76,23 @@ export default async function RootLayout({
                 Futuro<em>Agora</em>.tech
               </div>
             </div>
+            
+            {/* NOVAS CATEGORIAS DO MENU COM EMOJIS */}
             <ul className="nav-links">
               <li><Link href="/">Início</Link></li>
-              <li><a href="#">🤖 IA</a></li>
+              <li><a href="#">🤖 Inteligência Artificial</a></li>
               <li><a href="#">💻 Tecnologia</a></li>
-              <li><a href="#">⚛️ Ciência</a></li>
-              <li><a href="#">🇧🇷 Brasil Tech</a></li>
-              <li><a href="#">🔮 Futuro</a></li>
-              <li><a href="#">🎙 Podcast</a></li>
+              <li><a href="#">🌌 Ciência e Espaço</a></li>
+              <li><a href="#">💡 Inovação</a></li>
+              <li><a href="#">🎮 Games</a></li>
+              <li><a href="#">🇧🇷 Brasil</a></li>
             </ul>
+
             <div className="nav-right">
-              <button className="btn-srch">🔍</button>
+              {/* LUPA CONECTADA À NOVA PÁGINA DE BUSCA */}
+              <Link href="/pesquisa" className="btn-srch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+                🔍
+              </Link>
               <button className="btn-nl">Newsletter</button>
             </div>
           </div>
@@ -133,16 +136,20 @@ export default async function RootLayout({
                 <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
               </div>
             </div>
+            
+            {/* CATEGORIAS DO RODAPÉ COM EMOJIS */}
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
               <ul className="f-links">
                 <li><a href="#">🤖 Inteligência Artificial</a></li>
                 <li><a href="#">💻 Tecnologia</a></li>
-                <li><a href="#">⚛️ Ciência</a></li>
-                <li><a href="#">🇧🇷 Brasil Tech</a></li>
-                <li><a href="#">🔮 Futuro</a></li>
+                <li><a href="#">🌌 Ciência e Espaço</a></li>
+                <li><a href="#">💡 Inovação</a></li>
+                <li><a href="#">🎮 Games</a></li>
+                <li><a href="#">🇧🇷 Brasil</a></li>
               </ul>
             </div>
+
             <div className="fc">
               <div className="f-col-ttl">Site</div>
               <ul className="f-links">
