@@ -1156,10 +1156,23 @@ footer {
 }
 
 /* RESPONSIVE DESIGN */
+
 @media(max-width:900px) {
   .topbar { display: none; }
-  .nav-wrap { grid-template-columns: auto 1fr; }
-  .nav-links { display: none; }
+  .nav-wrap {
+    grid-template-columns: 1fr auto;
+    height: auto;
+    padding: 12px 20px 8px 20px;
+    gap: 8px;
+  }
+  .nav-links {
+    display: flex;
+    grid-column: span 2;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    width: 100%;
+  }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-side { flex-direction: row; overflow-x: auto; }
   .side-item { min-width: 240px; border-bottom: none; border-right: 2.5px solid var(--ink); }
@@ -1177,7 +1190,6 @@ footer {
   .footer-top { grid-template-columns: 1fr 1fr; }
   .footer-bot { flex-direction: column; gap: 8px; text-align: center; }
 }
-
 @media(max-width:560px) {
   .trending-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
