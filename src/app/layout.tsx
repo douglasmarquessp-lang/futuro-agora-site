@@ -76,43 +76,31 @@ export default async function RootLayout({
                 Futuro<em>Agora</em>.tech
               </div>
             </div>
-            
-            {/* NOVAS CATEGORIAS DO MENU COM EMOJIS */}
             <ul className="nav-links">
               <li><Link href="/">Início</Link></li>
-              <li><a href="#">🤖 Inteligência Artificial</a></li>
+              <li><a href="#">🤖 IA</a></li>
               <li><a href="#">💻 Tecnologia</a></li>
-              <li><a href="#">🌌 Ciência e Espaço</a></li>
-              <li><a href="#">💡 Inovação</a></li>
-              <li><a href="#">🎮 Games</a></li>
-              <li><a href="#">🇧🇷 Brasil</a></li>
+              <li><a href="#">⚛️ Ciência</a></li>
+              <li><a href="#">🇧🇷 Brasil Tech</a></li>
+              <li><a href="#">🔮 Futuro</a></li>
+              <li><a href="#">🎙 Podcast</a></li>
             </ul>
-
             <div className="nav-right">
-              {/* LUPA CONECTADA À NOVA PÁGINA DE BUSCA */}
-              <Link href="/pesquisa" className="btn-srch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-                🔍
-              </Link>
+              <Link href="/admin" className="btn-srch" style={{ textDecoration: 'none' }}>🔍</Link>
               <button className="btn-nl">Newsletter</button>
             </div>
           </div>
         </nav>
 
-        {/* CAT STRIP */}
+        {/* CAT STRIP (LETREIRO DE CATEGORIAS OFICIAIS DO SEU PORTAL) */}
         <div className="cat-strip">
           <div className="cat-inner">
-            <div className="cat-pill fire">🔥 Trending</div>
-            <div className="cat-pill">ChatGPT</div>
-            <div className="cat-pill">Google Gemini</div>
-            <div className="cat-pill">Claude AI</div>
-            <div className="cat-pill">Quantum</div>
-            <div className="cat-pill">OpenAI</div>
-            <div className="cat-pill">Meta IA</div>
-            <div className="cat-pill">Robôs</div>
-            <div className="cat-pill">Elon Musk</div>
-            <div className="cat-pill">Tesla</div>
-            <div className="cat-pill">SpaceX</div>
-            <div className="cat-pill">Saúde IA</div>
+            <div className="cat-pill fire">🔥 Em Alta</div>
+            <div className="cat-pill">🤖 Inteligência Artificial</div>
+            <div className="cat-pill">💻 Tecnologia</div>
+            <div className="cat-pill">⚛️ Ciência</div>
+            <div className="cat-pill">🇧🇷 Brasil Tech</div>
+            <div className="cat-pill">🔮 Futuro</div>
           </div>
         </div>
 
@@ -136,8 +124,6 @@ export default async function RootLayout({
                 <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
               </div>
             </div>
-            
-            {/* CATEGORIAS DO RODAPÉ COM EMOJIS */}
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
               <ul className="f-links">
@@ -149,7 +135,6 @@ export default async function RootLayout({
                 <li><a href="#">🇧🇷 Brasil</a></li>
               </ul>
             </div>
-
             <div className="fc">
               <div className="f-col-ttl">Site</div>
               <ul className="f-links">
