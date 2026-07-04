@@ -224,6 +224,7 @@ nav {
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
   scrollbar-width: none;
+  display: none;
 }
 
 .cat-strip::-webkit-scrollbar {
@@ -1157,6 +1158,8 @@ footer {
 
 /* RESPONSIVE DESIGN */
 @media(max-width:900px) {
+  .cat-strip {
+    display: block;
   .topbar { display: none; }
   .nav-wrap {
     grid-template-columns: auto 1fr;
