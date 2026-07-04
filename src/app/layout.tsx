@@ -47,6 +47,8 @@ export default async function RootLayout({
         "Brasil anuncia plano de R$ 23 bilhões em Inteligência Artificial"
       ];
 
+  const newsletterUrl = "https://preview.mailerlite.io/forms/2490045/192095157590426882/share";
+
   return (
     <html lang="pt-BR" className={`${bebasNeue.variable} ${plusJakartaSans.variable} ${lora.variable}`}>
       <body style={{ fontFamily: 'var(--font-jakarta)' }}>
@@ -77,7 +79,6 @@ export default async function RootLayout({
               </div>
             </div>
             
-            {/* LINKS DO MENU CONECTADOS AOS FILTROS DO BANCO */}
             <ul className="nav-links">
               <li><Link href="/">Início</Link></li>
               <li><Link href="/?cat=Inteligência Artificial">🤖 Inteligência Artificial</Link></li>
@@ -92,12 +93,15 @@ export default async function RootLayout({
               <Link href="/pesquisa" className="btn-srch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
                 🔍
               </Link>
-              <button className="btn-nl">Newsletter</button>
+              {/* Botão de Newsletter do Topo integrado com seu link */}
+              <a href={newsletterUrl} target="_blank" className="btn-nl" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                Newsletter
+              </a>
             </div>
           </div>
         </nav>
 
-        {/* BARRA DESLIZANTE DO CELULAR CONECTADA AOS FILTROS DO BANCO */}
+        {/* BARRA DESLIZANTE DO CELULAR */}
         <div className="cat-strip">
           <div className="cat-inner">
             <Link href="/" className="cat-pill fire">🔥 Em Alta</Link>
@@ -117,7 +121,7 @@ export default async function RootLayout({
           <div className="footer-top">
             <div className="fc">
               <div className="f-logo" style={{ fontFamily: 'var(--font-bebas)' }}>
-                Futuroexport<em>Agora</em>.tech
+                Futuro<em>Agora</em>.tech
               </div>
               <p className="f-desc">
                 IA, Tecnologia e Ciência explicados de forma simples para o povo brasileiro. O futuro está acontecendo agora — fique por dentro.
@@ -131,7 +135,6 @@ export default async function RootLayout({
               </div>
             </div>
             
-            {/* CATEGORIAS DO RODAPÉ CONECTADAS AOS FILTROS */}
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
               <ul className="f-links">
@@ -149,7 +152,7 @@ export default async function RootLayout({
               <ul className="f-links">
                 <li><Link href="/sobre-nos">Sobre nós</Link></li>
                 <li><Link href="/contato">Contato</Link></li>
-                <li><a href="#">Newsletter</a></li>
+                <li><a href={newsletterUrl} target="_blank">Newsletter</a></li>
                 <li><Link href="/anuncie-aqui">Anuncie aqui</Link></li>
               </ul>
             </div>
