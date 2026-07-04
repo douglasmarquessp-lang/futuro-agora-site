@@ -191,13 +191,17 @@ export default async function HomePage({ searchParams }: any) {
 
             <div className="col-side">
               <div className="widget">
-                <div className="wid-nl">
-                  <h3>📬 NEWSLETTER</h3>
-                  <p>Receba as principais notícias de IA e tecnologia todo dia. Grátis.</p>
-                  <input type="email" className="nl-in" placeholder="Seu melhor e-mail" />
-                  <button className="nl-btn">Quero receber ⚡</button>
-                </div>
-              </div>
+  <div className="wid-nl">
+    <h3>📬 NEWSLETTER</h3>
+    <p>Receba as principais notícias de IA e tecnologia todo dia. Grátis.</p>
+    
+    {/* Formulário de Envio Direto e Seguro para sua lista do MailerLite */}
+    <form action="https://assets.mailerlite.com/jsonp/d/2490045/forms/192095157590426882/subscribe" method="POST" target="_blank">
+      <input type="email" name="fields[email]" className="nl-in" placeholder="Seu melhor e-mail" required />
+      <button type="submit" className="nl-btn">Quero receber ⚡</button>
+    </form>
+  </div>
+</div>
 
               <div className="widget">
                 <div className="wid-head" style={{ fontFamily: 'var(--font-bebas)' }}>🔥 Mais compartilhadas</div>
