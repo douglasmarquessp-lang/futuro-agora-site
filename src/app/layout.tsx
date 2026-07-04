@@ -76,31 +76,37 @@ export default async function RootLayout({
                 Futuro<em>Agora</em>.tech
               </div>
             </div>
+            
+            {/* LINKS DO MENU CONECTADOS AOS FILTROS DO BANCO */}
             <ul className="nav-links">
               <li><Link href="/">Início</Link></li>
-              <li><a href="#">🤖 IA</a></li>
-              <li><a href="#">💻 Tecnologia</a></li>
-              <li><a href="#">⚛️ Ciência</a></li>
-              <li><a href="#">🇧🇷 Brasil Tech</a></li>
-              <li><a href="#">🔮 Futuro</a></li>
-              <li><a href="#">🎙 Podcast</a></li>
+              <li><Link href="/?cat=Inteligência Artificial">🤖 Inteligência Artificial</Link></li>
+              <li><Link href="/?cat=Tecnologia">💻 Tecnologia</Link></li>
+              <li><Link href="/?cat=Ciência">🌌 Ciência e Espaço</Link></li>
+              <li><Link href="/?cat=Inovação">💡 Inovação</Link></li>
+              <li><Link href="/?cat=Games">🎮 Games</Link></li>
+              <li><Link href="/?cat=Brasil">🇧🇷 Brasil</Link></li>
             </ul>
+
             <div className="nav-right">
-              <Link href="/admin" className="btn-srch" style={{ textDecoration: 'none' }}>🔍</Link>
+              <Link href="/pesquisa" className="btn-srch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
+                🔍
+              </Link>
               <button className="btn-nl">Newsletter</button>
             </div>
           </div>
         </nav>
 
-        {/* CAT STRIP (LETREIRO DE CATEGORIAS OFICIAIS DO SEU PORTAL) */}
+        {/* BARRA DESLIZANTE DO CELULAR CONECTADA AOS FILTROS DO BANCO */}
         <div className="cat-strip">
           <div className="cat-inner">
-            <div className="cat-pill fire">🔥 Em Alta</div>
-            <div className="cat-pill">🤖 Inteligência Artificial</div>
-            <div className="cat-pill">💻 Tecnologia</div>
-            <div className="cat-pill">⚛️ Ciência</div>
-            <div className="cat-pill">🇧🇷 Brasil Tech</div>
-            <div className="cat-pill">🔮 Futuro</div>
+            <Link href="/" className="cat-pill fire">🔥 Em Alta</Link>
+            <Link href="/?cat=Inteligência Artificial" className="cat-pill">🤖 Inteligência Artificial</Link>
+            <Link href="/?cat=Tecnologia" className="cat-pill">💻 Tecnologia</Link>
+            <Link href="/?cat=Ciência" className="cat-pill">🌌 Ciência e Espaço</Link>
+            <Link href="/?cat=Inovação" className="cat-pill">💡 Inovação</Link>
+            <Link href="/?cat=Games" className="cat-pill">🎮 Games</Link>
+            <Link href="/?cat=Brasil" className="cat-pill">🇧🇷 Brasil</Link>
           </div>
         </div>
 
@@ -111,7 +117,7 @@ export default async function RootLayout({
           <div className="footer-top">
             <div className="fc">
               <div className="f-logo" style={{ fontFamily: 'var(--font-bebas)' }}>
-                Futuro<em>Agora</em>.tech
+                Futuroexport<em>Agora</em>.tech
               </div>
               <p className="f-desc">
                 IA, Tecnologia e Ciência explicados de forma simples para o povo brasileiro. O futuro está acontecendo agora — fique por dentro.
@@ -124,17 +130,20 @@ export default async function RootLayout({
                 <a href="https://wa.me/5511933320948" target="_blank" className="soc-btn">💬</a>
               </div>
             </div>
+            
+            {/* CATEGORIAS DO RODAPÉ CONECTADAS AOS FILTROS */}
             <div className="fc">
               <div className="f-col-ttl">Categorias</div>
               <ul className="f-links">
-                <li><a href="#">🤖 Inteligência Artificial</a></li>
-                <li><a href="#">💻 Tecnologia</a></li>
-                <li><a href="#">🌌 Ciência e Espaço</a></li>
-                <li><a href="#">💡 Inovação</a></li>
-                <li><a href="#">🎮 Games</a></li>
-                <li><a href="#">🇧🇷 Brasil</a></li>
+                <li><Link href="/?cat=Inteligência Artificial">🤖 Inteligência Artificial</Link></li>
+                <li><Link href="/?cat=Tecnologia">💻 Tecnologia</Link></li>
+                <li><Link href="/?cat=Ciência">🌌 Ciência e Espaço</Link></li>
+                <li><Link href="/?cat=Inovação">💡 Inovação</Link></li>
+                <li><Link href="/?cat=Games">🎮 Games</Link></li>
+                <li><Link href="/?cat=Brasil">🇧🇷 Brasil</Link></li>
               </ul>
             </div>
+
             <div className="fc">
               <div className="f-col-ttl">Site</div>
               <ul className="f-links">
