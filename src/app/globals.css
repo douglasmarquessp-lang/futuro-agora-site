@@ -1156,22 +1156,18 @@ footer {
 }
 
 /* RESPONSIVE DESIGN */
-
 @media(max-width:900px) {
   .topbar { display: none; }
   .nav-wrap {
-    grid-template-columns: 1fr auto;
-    height: auto;
-    padding: 12px 20px 8px 20px;
-    gap: 8px;
+    grid-template-columns: auto 1fr;
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .nav-links {
-    display: flex;
-    grid-column: span 2;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-    overflow-x: auto;
-    width: 100%;
+    display: none;
   }
   .hero-grid { grid-template-columns: 1fr; }
   .hero-side { flex-direction: row; overflow-x: auto; }
