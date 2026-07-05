@@ -190,14 +190,14 @@ export default async function HomePage({ searchParams }: any) {
             </div>
 
             <div className="col-side">
-              <div className="widget">
+            <div className="widget">
   <div className="wid-nl">
     <h3>📬 NEWSLETTER</h3>
     <p>Receba as principais notícias de IA e tecnologia todo dia. Grátis.</p>
     
-    {/* Formulário de Envio Direto e Seguro para sua lista do MailerLite */}
-    <form action="https://assets.mailerlite.com/jsonp/d/2490045/forms/192095157590426882/subscribe" method="POST" target="_blank">
-      <input type="email" name="fields[email]" className="nl-in" placeholder="Seu melhor e-mail" required />
+    {/* Envio Seguro e Sem Erros com pré-preenchimento automático do e-mail */}
+    <form action="https://preview.mailerlite.io/forms/2490045/192095157590426882/share" method="GET" target="_blank">
+      <input type="email" name="email" className="nl-in" placeholder="Seu melhor e-mail" required />
       <button type="submit" className="nl-btn">Quero receber ⚡</button>
     </form>
   </div>
