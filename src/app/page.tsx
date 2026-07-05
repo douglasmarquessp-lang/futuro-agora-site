@@ -17,7 +17,7 @@ export default async function HomePage({ searchParams }: any) {
 
   const featured = articles.find((a) => a.isFeatured) || articles[0];
   const sideArticles = articles.filter((a) => a.id !== featured?.id).slice(0, 3);
-  const trendingArticles = articles.filter((a) => a.isTrending).slice(0, 5);
+  const trendingArticles = [...articles].sort((a, b) => b.views - a.views).slice(0, 5);
   const remainingArticles = articles.filter((a) => a.id !== featured?.id && !sideArticles.some((s) => s.id === a.id));
 
   return (
