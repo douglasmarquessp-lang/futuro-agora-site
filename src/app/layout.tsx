@@ -26,6 +26,16 @@ const lora = Lora({
 export const metadata = {
   title: 'FuturoAgora.tech — IA, Tecnologia e Ciência do Futuro',
   description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
+  icons: {
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ]
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default async function RootLayout({
