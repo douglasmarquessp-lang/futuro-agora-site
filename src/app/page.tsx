@@ -6,60 +6,84 @@ export const dynamic = 'force-dynamic';
 export default async function HomePage({ searchParams }: any) {
   const selectedCategory = searchParams?.cat;
 
-  const articles = await db.article.findMany({
-    where: { published: true },
-    orderBy: { createdAt: 'desc' },
-  });
+  let articles = [];
+
+  // Busca unificada e explícita no banco de dados para evitar erros de compilação
+  if (selectedCategory) {
+    articles = await db.article.findMany({
+      where: {
+        published: true,
+        category: {
+          contains: selectedCategory,
+          mode: 'insensitive' // Busca sem diferenciar maiúsculas/minúsculas
+        }
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  } else {
+    articles = await db.article.findMany({
+      where: {
+        published: true
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
 
   const featured = articles.find((a) => a.isFeatured) || articles[0];
   const sideArticles = articles.filter((a) => a.id !== featured?.id).slice(0, 3);
-  const trendingArticles = [...articles].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+  const trendingArticles = articles.filter((a) => a.isTrending).slice(0, 5);
   
-  // FILTRO E LIMITE: Seleciona apenas os artigos restantes e limita a exibição a 6 na Home
+  // Limita a exibição de recentes na Home a no máximo 6
   const remainingArticles = articles
     .filter((a) => a.id !== featured?.id && !sideArticles.some((s) => s.id === a.id))
-    .slice(0, 6); // <-- LIMITADO A 6 NA HOME
+    .slice(0, 6);
 
   return (
     <div className="page">
       {selectedCategory ? (
+        /* VISUALIZAÇÃO DE FILTRO POR CATEGORIA */
         <div style={{ marginTop: '30px', marginBottom: '40px' }}>
           <Link href="/" style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--red)', textDecoration: 'none' }}>
             ← Ver todos os destaques (Home)
           </Link>
-          <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', marginTop: '20px', marginBottom: '20px' }}>
+          <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', marginTop: '15px', marginBottom: '25px' }}>
             Explorando: <span style={{ color: 'var(--red)' }}>{selectedCategory}</span> ({articles.length})
           </h1>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {articles.map((art) => (
-              <Link key={art.id} href={`/artigo/${art.slug}`} className="art-row" style={{ background: '#fff', border: '1.5px solid var(--border)', borderRadius: '4px' }}>
-                {art.imageUrl ? (
-                  <div 
-                    className="art-thumb" 
-                    style={{ 
-                      width: '86px', 
-                      height: '64px', 
-                      borderRadius: '4px', 
-                      backgroundImage: `url(${art.imageUrl})`, 
-                      backgroundSize: 'cover', 
-                      backgroundPosition: 'center', 
-                      flexShrink: 0 
-                    }}
-                  />
-                ) : (
-                  <div className="art-thumb th2">{art.emoji}</div>
-                )}
-                <div className="art-info">
-                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 800, color: 'var(--red)' }}>{art.category}</span>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '2px 0' }}>{art.title}</h4>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{new Date(art.createdAt).toLocaleDateString('pt-BR')} · {art.readTime} · 👁 {art.views}</p>
-                </div>
-              </Link>
-            ))}
+            {articles.length > 0 ? (
+              articles.map((art) => (
+                <Link key={art.id} href={`/artigo/${art.slug}`} className="art-row" style={{ background: '#fff', border: '1.5px solid var(--border)', borderRadius: '4px' }}>
+                  {art.imageUrl ? (
+                    <div 
+                      className="art-thumb" 
+                      style={{ 
+                        width: '86px', 
+                        height: '64px', 
+                        borderRadius: '4px', 
+                        backgroundImage: `url(${art.imageUrl})`, 
+                        backgroundSize: 'cover', 
+                        backgroundPosition: 'center', 
+                        flexShrink: 0 
+                      }}
+                    />
+                  ) : (
+                    <div className="art-thumb th2">{art.emoji}</div>
+                  )}
+                  <div className="art-info">
+                    <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 800, color: 'var(--red)' }}>{art.category}</span>
+                    <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '2px 0' }}>{art.title}</h4>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{new Date(art.createdAt).toLocaleDateString('pt-BR')} · {art.readTime} · 👁 {art.views}</p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p style={{ fontStyle: 'italic', color: 'var(--muted)' }}>Nenhum artigo publicado nesta categoria no momento.</p>
+            )}
           </div>
         </div>
       ) : (
+        /* VISUALIZAÇÃO PADRÃO DA HOMEPAGE COMPLETA (SEM FILTROS) */
         <>
           <div className="sec-head">
             <div className="sec-line"></div>
@@ -141,7 +165,6 @@ export default async function HomePage({ searchParams }: any) {
             </>
           )}
 
-          {/* SEÇÃO ÚLTIMAS NOTÍCIAS COM BOTÃO VER TODAS INTEGRADO */}
           <div className="sec-head">
             <div className="sec-title" style={{ fontFamily: 'var(--font-bebas)' }}>ÚLTIMAS NOTÍCIAS</div>
             <div className="sec-line"></div>
