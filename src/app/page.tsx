@@ -8,14 +8,14 @@ export default async function HomePage({ searchParams }: any) {
 
   let articles = [];
 
-  // Busca unificada e explícita no banco de dados para evitar erros de compilação
+  // Busca unificada no banco de dados para evitar erros de compilação
   if (selectedCategory) {
     articles = await db.article.findMany({
       where: {
         published: true,
         category: {
           contains: selectedCategory,
-          mode: 'insensitive' // Busca sem diferenciar maiúsculas/minúsculas
+          mode: 'insensitive'
         }
       },
       orderBy: { createdAt: 'desc' },
@@ -31,8 +31,12 @@ export default async function HomePage({ searchParams }: any) {
 
   const featured = articles.find((a) => a.isFeatured) || articles[0];
   const sideArticles = articles.filter((a) => a.id !== featured?.id).slice(0, 3);
-  const trendingArticles = articles.filter((a) => a.isTrending).slice(0, 5);
   
+  // CORREÇÃO DEFINITIVA: Ordenação automática e segura pelos mais vistos do site em tempo real
+  const trendingArticles = [...articles]
+    .sort((a, b) => (b.views || 0) - (a.views || 0))
+    .slice(0, 5);
+
   // Limita a exibição de recentes na Home a no máximo 6
   const remainingArticles = articles
     .filter((a) => a.id !== featured?.id && !sideArticles.some((s) => s.id === a.id))
