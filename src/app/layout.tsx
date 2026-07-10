@@ -26,16 +26,6 @@ const lora = Lora({
 export const metadata = {
   title: 'FuturoAgora.tech — IA, Tecnologia e Ciência do Futuro',
   description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
-  icons: {
-    icon: [
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ]
-  },
-  manifest: '/site.webmanifest',
 };
 
 export default async function RootLayout({
@@ -59,13 +49,19 @@ export default async function RootLayout({
 
   const newsletterUrl = "https://preview.mailerlite.io/forms/2490045/192095157590426882/share";
 
+  // GERAÇÃO DE DATA AUTOMÁTICA EM TEMPO REAL
+  const currentDate = new Date();
+  const formattedMonth = currentDate.toLocaleDateString('pt-BR', { month: 'long' });
+  const capitalizedMonth = formattedMonth.charAt(0).toUpperCase() + formattedMonth.slice(1);
+  const dynamicDateStr = `📅 ${capitalizedMonth} de ${currentDate.getFullYear()}`;
+
   return (
     <html lang="pt-BR" className={`${bebasNeue.variable} ${plusJakartaSans.variable} ${lora.variable}`}>
       <body style={{ fontFamily: 'var(--font-jakarta)' }}>
         
-        {/* LETREIRO DINÂMICO AUTOMÁTICO */}
+        {/* LETREIRO DINÂMICO COM DATA AUTOMÁTICA */}
         <div className="topbar">
-          <span className="topbar-date">📅 Maio 2026</span>
+          <span className="topbar-date">{dynamicDateStr}</span>
           <div className="topbar-scroll">
             <div className="ticker-wrap">
               {tickerItems.map((text, idx) => (
@@ -103,7 +99,6 @@ export default async function RootLayout({
               <Link href="/pesquisa" className="btn-srch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
                 🔍
               </Link>
-              {/* Botão de Newsletter do Topo integrado com seu link */}
               <a href={newsletterUrl} target="_blank" className="btn-nl" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                 Newsletter
               </a>
