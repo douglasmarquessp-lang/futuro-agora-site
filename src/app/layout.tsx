@@ -58,6 +58,7 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" className={`${bebasNeue.variable} ${plusJakartaSans.variable} ${lora.variable}`}>
       <body style={{ fontFamily: 'var(--font-jakarta)' }}>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9706420346764793" crossOrigin="anonymous"></script>
         
         {/* LETREIRO DINÂMICO COM DATA AUTOMÁTICA */}
         <div className="topbar">
