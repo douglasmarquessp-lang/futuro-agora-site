@@ -2,10 +2,64 @@ import { db } from '../../lib/db';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+
+// Configuração de metadados para noindex/nofollow na rota admin
+export const metadata = {
+  title: 'Painel Administrativo — Restrito',
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+// Função auxiliar para verificar sessão segura
+async function verifySession() {
+  const cookieStore = cookies();
+  const session = cookieStore.get('admin_session')?.value;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  return !!adminPassword && session === adminPassword;
+}
+
+// Ação de login administrativo
+async function loginAction(formData: FormData) {
+  'use server';
+  const password = formData.get('password') as string;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminPassword) return;
+
+  if (password === adminPassword) {
+    const cookieStore = cookies();
+    cookieStore.set('admin_session', adminPassword, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 2, // Expira em 2 horas
+    });
+  }
+
+  revalidatePath('/admin');
+  redirect('/admin');
+}
+
+// Ação de logout administrativo
+async function logoutAction() {
+  'use server';
+  const cookieStore = cookies();
+  cookieStore.delete('admin_session');
+  revalidatePath('/admin');
+  redirect('/admin');
+}
 
 // Salvar artigo (Criar ou Atualizar) com os novos campos
 async function saveArticleAction(formData: FormData) {
   'use server';
+
+  if (!(await verifySession())) {
+    throw new Error('Não autorizado');
+  }
 
   const id = formData.get('id') as string;
   const title = formData.get('title') as string;
@@ -60,6 +114,10 @@ async function saveArticleAction(formData: FormData) {
 async function deleteArticleAction(formData: FormData) {
   'use server';
 
+  if (!(await verifySession())) {
+    throw new Error('Não autorizado');
+  }
+
   const id = formData.get('id') as string;
   if (!id) return;
 
@@ -73,6 +131,24 @@ async function deleteArticleAction(formData: FormData) {
 }
 
 export default async function AdminPage({ searchParams }: any) {
+  const isAuthorized = await verifySession();
+
+  if (!isAuthorized) {
+    return (
+      <div className="page" style={{ marginTop: '50px', maxWidth: '450px', margin: '100px auto', background: '#fff', padding: '40px', border: '2.5px solid var(--ink)', borderRadius: '6px' }}>
+        <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', marginBottom: '10px', textAlign: 'center' }}>Restrito ⚡</h1>
+        <p style={{ fontSize: '0.85rem', color: 'var(--muted)', textAlign: 'center', marginBottom: '25px', fontWeight: 600 }}>Área de administração segura do Futuro Agora.</p>
+        <form action={loginAction} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <div className="form-group" style={{ marginBottom: 0 }}>
+            <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Senha de Acesso</label>
+            <input type="password" name="password" className="form-input" placeholder="Digite a chave mestre" required />
+          </div>
+          <button type="submit" className="admin-btn" style={{ width: '100%', marginTop: '10px' }}>Entrar no Painel</button>
+        </form>
+      </div>
+    );
+  }
+
   const articles = await db.article.findMany({
     orderBy: { createdAt: 'desc' },
   });
@@ -88,9 +164,16 @@ export default async function AdminPage({ searchParams }: any) {
 
   return (
     <div className="page" style={{ marginTop: '30px' }}>
-      <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', marginBottom: '20px' }}>
-        {editArticle ? 'Modo de Edição' : 'Painel Administrativo'}
-      </h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px', gap: '20px', flexWrap: 'wrap' }}>
+        <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '2.5rem', margin: 0 }}>
+          {editArticle ? 'Modo de Edição' : 'Painel Administrativo'}
+        </h1>
+        <form action={logoutAction} style={{ margin: 0 }}>
+          <button type="submit" className="admin-btn" style={{ background: 'var(--muted)', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 800, cursor: 'pointer' }}>
+            Sair (Logout) 🚪
+          </button>
+        </form>
+      </div>
 
       <div className="two-col">
         {/* Formulário com novos campos */}
@@ -219,4 +302,4 @@ export default async function AdminPage({ searchParams }: any) {
       </div>
     </div>
   );
-            }
+}

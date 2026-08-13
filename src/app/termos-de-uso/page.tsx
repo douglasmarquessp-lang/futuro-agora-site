@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Termos de Uso — FuturoAgora.tech',
+  description: 'Leia os nossos Termos de Uso e entenda as regras, direitos e deveres para navegação e utilização do conteúdo do portal FuturoAgora.tech.',
+  alternates: {
+    canonical: 'https://futuroagora.tech/termos-de-uso',
+  },
+};
 
 export default function TermosDeUsoPage() {
   return (
@@ -43,7 +52,7 @@ export default function TermosDeUsoPage() {
           
           <li>
             <strong>Links Externos</strong><br />
-            O FuturoAgora.tech pode conter links para sites de terceiros. Não nos responsabilizamos pelo conteúdo, políticas de privacidade, termos de uso ou práticas dessas páginas externas.
+            O FuturoAgora.tech może conter links para sites de terceiros. Não nos responsabilizamos pelo conteúdo, políticas de privacidade, termos de uso ou práticas dessas páginas externas.
           </li>
           
           <li>

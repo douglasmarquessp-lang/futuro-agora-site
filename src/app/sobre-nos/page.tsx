@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sobre Nós — FuturoAgora.tech',
+  description: 'Conheça a missão, os valores e a equipe por trás do FuturoAgora.tech, seu portal de Inteligência Artificial, tecnologia e ciência do amanhã.',
+  alternates: {
+    canonical: 'https://futuroagora.tech/sobre-nos',
+  },
+};
 
 export default function SobreNosPage() {
   return (

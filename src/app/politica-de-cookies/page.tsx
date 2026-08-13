@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Política de Cookies — FuturoAgora.tech',
+  description: 'Confira a nossa Política de Cookies e compreenda quais cookies utilizamos e como você pode gerenciar suas preferências no portal FuturoAgora.tech.',
+  alternates: {
+    canonical: 'https://futuroagora.tech/politica-de-cookies',
+  },
+};
 
 export default function PoliticaCookiesPage() {
   return (

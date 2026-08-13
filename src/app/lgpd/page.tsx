@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Conformidade LGPD — FuturoAgora.tech',
+  description: 'Saiba como o FuturoAgora.tech atua em total conformidade com a Lei Geral de Proteção de Dados (LGPD) para garantir a segurança e controle dos seus dados.',
+  alternates: {
+    canonical: 'https://futuroagora.tech/lgpd',
+  },
+};
 
 export default function LgpdPage() {
   return (
@@ -19,7 +28,7 @@ export default function LgpdPage() {
         <p style={{ marginBottom: '15px' }}>
           O <strong>FuturoAgora.tech</strong> tem o firme compromisso de proteger a privacidade e a segurança dos dados pessoais de seus leitores e usuários. Esta página descreve de forma clara e transparente como tratamos as informações do site, em total conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018 - LGPD)</strong>.
         </p>
-
+ 
         <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginTop: '25px', marginBottom: '10px' }}>
           1. Quais dados coletamos e qual a finalidade?
         </h3>
@@ -30,7 +39,7 @@ export default function LgpdPage() {
           <li><strong>Newsletter (Inscrição por E-mail):</strong> Coletamos o seu e-mail de forma voluntária exclusivamente para enviar nossos resumos de notícias, novidades e artigos relevantes. Esse tratamento é baseado no seu <strong>Consentimento</strong>.</li>
           <li><strong>Navegação (Cookies e Estatísticas):</strong> Coletamos dados técnicos e anônimos (como páginas visitadas, tempo de permanência e localização aproximada via Google Analytics) para entender o interesse de leitura e melhorar o site. Esse tratamento é baseado no nosso <strong>Legítimo Interesse</strong>.</li>
         </ul>
-
+ 
         <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginTop: '25px', marginBottom: '10px' }}>
           2. Quais são os seus direitos sob a LGPD?
         </h3>
@@ -39,25 +48,25 @@ export default function LgpdPage() {
         </p>
         <ul style={{ paddingLeft: '20px', marginBottom: '15px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <li><strong>Confirmação e Acesso:</strong> Saber se realizamos algum tratamento com seus dados e obter uma cópia das informações salvas.</li>
-          <li><strong>Correção:</strong> Solicitar a atualização de qualquer dado incorreto, incompleto ou desatualizado.</li>
+          <li><strong>Correção:</strong> Solicitar a atualização de qualquer dato incorreto, incompleto ou desatualizado.</li>
           <li><strong>Eliminação ou Anonimização:</strong> Solicitar a exclusão ou bloqueio de dados que você sinta que são desnecessários para a entrega do conteúdo.</li>
           <li><strong>Revogação do Consentimento:</strong> Cancelar a assinatura da newsletter a qualquer momento, seja clicando no link de descadastro no final de qualquer e-mail enviado ou nos contatando diretamente.</li>
         </ul>
-
+ 
         <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginTop: '25px', marginBottom: '10px' }}>
           3. Segurança e Armazenamento
         </h3>
         <p style={{ marginBottom: '15px' }}>
           Adotamos protocolos rígidos de segurança da informação para blindar seus dados pessoais. O site inteiro conta com criptografia de ponta a ponta (conexão SSL segura via HTTPS) para prevenir perdas, vazamentos ou acessos não autorizados de terceiros.
         </p>
-
+ 
         <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginTop: '25px', marginBottom: '10px' }}>
           4. Compartilhamento de Dados
         </h3>
         <p style={{ marginBottom: '15px' }}>
           O FuturoAgora.tech <strong>nunca comercializa, vende ou repassa</strong> seus dados pessoais para empresas de publicidade ou marketing de terceiros. Seus dados só são compartilhados com ferramentas parceiras essenciais para o funcionamento do site (como nosso envio automático de e-mails), que também cumprem rigorosamente as normas de privacidade e a LGPD.
         </p>
-
+ 
         <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', marginTop: '25px', marginBottom: '10px' }}>
           5. Fale com nosso Encarregado de Dados (DPO)
         </h3>

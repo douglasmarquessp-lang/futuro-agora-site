@@ -1,12 +1,64 @@
 import { db } from '../../../lib/db';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { Metadata } from 'next';
 
 export const revalidate = 10;
 
 interface ArticlePageProps {
   params: {
     slug: string;
+  };
+}
+
+// Geração dinâmica de metadados para SEO, Open Graph e Twitter Cards
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+  const article = await db.article.findUnique({
+    where: { slug: params.slug },
+  }).catch(() => null);
+
+  if (!article) {
+    return {
+      title: 'Artigo Não Encontrado — FuturoAgora.tech',
+    };
+  }
+
+  const title = `${article.title} — FuturoAgora.tech`;
+  const description = article.metaDescription || article.excerpt || '';
+  const url = `https://futuroagora.tech/artigo/${article.slug}`;
+  const imageUrl = article.imageUrl || 'https://futuroagora.tech/favicon-32x32.png';
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'article',
+      publishedTime: article.createdAt.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+      authors: [article.authorName || 'Douglas Marques'],
+      images: [
+        {
+          url: imageUrl,
+          alt: article.title,
+        }
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    }
   };
 }
 
@@ -19,6 +71,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
+  // Incrementa visualização de forma assíncrona e segura
   await db.article.update({
     where: { id: article.id },
     data: { views: { increment: 1 } },
@@ -30,8 +83,42 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     orderBy: { createdAt: 'desc' },
   });
 
+  // Geração de dados estruturados JSON-LD do tipo NewsArticle com dados 100% reais do banco
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    'headline': article.title,
+    'description': article.excerpt || article.metaDescription || '',
+    'image': article.imageUrl ? [article.imageUrl] : ['https://futuroagora.tech/favicon-32x32.png'],
+    'datePublished': article.createdAt.toISOString(),
+    'dateModified': article.updatedAt.toISOString(),
+    'author': {
+      '@type': 'Person',
+      'name': article.authorName || 'Douglas Marques',
+      'url': 'https://futuroagora.tech/sobre-nos',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'FuturoAgora.tech',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://futuroagora.tech/favicon-32x32.png',
+      }
+    },
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `https://futuroagora.tech/artigo/${article.slug}`,
+    }
+  };
+
   return (
     <div className="page" style={{ marginTop: '30px' }}>
+      {/* Script JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <div style={{ marginBottom: '20px' }}>
         <Link href="/" style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--red)', textDecoration: 'none' }}>
           ← Voltar para a Home

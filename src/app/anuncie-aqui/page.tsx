@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Anuncie Conosco — FuturoAgora.tech',
+  description: 'Conecte sua marca à nossa audiência qualificada e interessada em Inteligência Artificial, inovação, ciência e tecnologia do futuro.',
+  alternates: {
+    canonical: 'https://futuroagora.tech/anuncie-aqui',
+  },
+};
 
 export default function AnuncieAquiPage() {
   return (
