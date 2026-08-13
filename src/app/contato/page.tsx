@@ -3,18 +3,21 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+const OFFICIAL_EMAIL = 'contato@futuroagora.tech';
+const WHATSAPP_URL = 'https://wa.me/5511933320948';
+
 export default function ContatoPage() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
 
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1000);
+    const subject = encodeURIComponent(`[CONTATO SITE] ${formData.subject || 'Mensagem pelo site'}`);
+    const body = encodeURIComponent(
+      `Nome: ${formData.name}\nE-mail para resposta: ${formData.email}\n\nMensagem:\n${formData.message}`
+    );
+
+    window.location.href = `mailto:${OFFICIAL_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -27,68 +30,69 @@ export default function ContatoPage() {
         Contato
       </h1>
       <p style={{ lineHeight: '1.6', fontSize: '1rem', color: 'var(--muted)', marginBottom: '30px' }}>
-        Tem alguma dúvida, sugestão de pauta, proposta comercial ou apenas quer mandar um alô? Preencha o formulário abaixo ou fale conosco pelo e-mail oficial.
+        Tem alguma dúvida, sugestão de pauta, proposta comercial ou apenas quer mandar um alô? Fale conosco pelo e-mail oficial ou WhatsApp.
       </p>
 
       <div className="two-col" style={{ border: 'none', gridTemplateColumns: '1fr 300px', gap: '30px', marginBottom: '0' }}>
         
-        {/* Formulário de Contato */}
+        {/* Formulário de Contato via e-mail */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {status === 'success' ? (
-            <div style={{ background: 'var(--green)', color: '#fff', padding: '20px', borderRadius: '4px', border: '2.5px solid var(--ink)', fontWeight: 'bold', textAlign: 'center' }}>
-              ⚡ Sua mensagem foi enviada com sucesso! Responderemos o mais rápido possível.
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div className="form-group" style={{ marginBottom: '0' }}>
+              <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Nome Completo</label>
+              <input
+                type="text"
+                name="name"
+                className="form-input"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              <div className="form-group" style={{ marginBottom: '0' }}>
-                <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Nome Completo</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-              </div>
 
-              <div className="form-group" style={{ marginBottom: '0' }}>
-                <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>E-mail para Contato</label>
-                <input
-                  type="email"
-                  className="form-input"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-              </div>
+            <div className="form-group" style={{ marginBottom: '0' }}>
+              <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>E-mail para Contato</label>
+              <input
+                type="email"
+                name="email"
+                className="form-input"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+              />
+            </div>
 
-              <div className="form-group" style={{ marginBottom: '0' }}>
-                <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Assunto</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  required
-                />
-              </div>
+            <div className="form-group" style={{ marginBottom: '0' }}>
+              <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Assunto</label>
+              <input
+                type="text"
+                name="subject"
+                className="form-input"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                required
+              />
+            </div>
 
-              <div className="form-group" style={{ marginBottom: '0' }}>
-                <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Mensagem</label>
-                <textarea
-                  className="form-input"
-                  rows={6}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                ></textarea>
-              </div>
+            <div className="form-group" style={{ marginBottom: '0' }}>
+              <label style={{ fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: '5px', display: 'block' }}>Mensagem</label>
+              <textarea
+                name="message"
+                className="form-input"
+                rows={6}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                required
+              ></textarea>
+            </div>
 
-              <button type="submit" className="admin-btn" style={{ width: 'fit-content' }} disabled={status === 'loading'}>
-                {status === 'loading' ? 'Enviando...' : 'Enviar Mensagem ⚡'}
-              </button>
-            </form>
-          )}
+            <button type="submit" className="admin-btn" style={{ width: 'fit-content' }}>
+              Enviar Mensagem ⚡
+            </button>
+            <p style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '-5px' }}>
+              Ao enviar, seu programa de e-mail abre com a mensagem pronta para o endereço {OFFICIAL_EMAIL}.
+            </p>
+          </form>
         </div>
 
         {/* Informações Laterais */}
@@ -99,11 +103,10 @@ export default function ContatoPage() {
               Se preferir, envie um e-mail diretamente para:
             </p>
             <p style={{ fontSize: '0.9rem', fontWeight: 'bold', margin: '8px 0', wordBreak: 'break-all' }}>
-              📧 contato@futuroagora.tech
+              📧 {OFFICIAL_EMAIL}
             </p>
             
-            {/* Seu Botão do WhatsApp Real integrado */}
-            <a href="https://wa.me/5511933320948" target="_blank" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'var(--green)', color: '#fff', padding: '8px 14px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.8rem', fontWeight: 'bold', marginTop: '10px', border: '1.5px solid var(--ink)' }}>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'var(--green)', color: '#fff', padding: '8px 14px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.8rem', fontWeight: 'bold', marginTop: '10px', border: '1.5px solid var(--ink)' }}>
               💬 Chamar no WhatsApp
             </a>
             

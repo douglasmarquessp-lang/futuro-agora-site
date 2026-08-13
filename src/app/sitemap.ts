@@ -3,7 +3,7 @@ import { db } from '../lib/db';
 export const revalidate = 60; // Atualiza o sitemap no cache a cada 60 segundos
 
 export default async function sitemap() {
-  const baseUrl = 'https://futuroagora.tech';
+  const baseUrl = 'https://www.futuroagora.tech';
 
   // Busca todos os artigos publicados do banco de dados para incluir no sitemap do Google
   const articles = await db.article.findMany({

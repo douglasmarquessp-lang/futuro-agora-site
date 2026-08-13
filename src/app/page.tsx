@@ -1,7 +1,61 @@
 import { db } from '../lib/db';
 import Link from 'next/link';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+const SITE_URL = 'https://www.futuroagora.tech';
+
+export const metadata: Metadata = {
+  title: 'FuturoAgora.tech — IA, Tecnologia e Ciência do Futuro',
+  description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: 'FuturoAgora.tech — IA, Tecnologia e Ciência do Futuro',
+    description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
+    url: SITE_URL,
+    siteName: 'FuturoAgora.tech',
+    type: 'website',
+    locale: 'pt_BR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FuturoAgora.tech — IA, Tecnologia e Ciência do Futuro',
+    description: 'Inteligência Artificial, Tecnologia e Ciência explicados de forma simples para o povo brasileiro.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'FuturoAgora.tech',
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon-32x32.png`,
+  sameAs: [
+    'https://x.com/DouglasMarkes1',
+    'https://www.facebook.com/share/1HBmFNkcdU/',
+    'https://www.instagram.com/futuroagora.tech',
+    'https://youtube.com/@cienciatecnologia8897',
+  ],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'FuturoAgora.tech',
+  url: SITE_URL,
+  publisher: {
+    '@type': 'Organization',
+    name: 'FuturoAgora.tech',
+    logo: `${SITE_URL}/favicon-32x32.png`,
+  },
+};
 
 export default async function HomePage({ searchParams }: any) {
   const selectedCategory = searchParams?.cat;
@@ -44,6 +98,14 @@ export default async function HomePage({ searchParams }: any) {
 
   return (
     <div className="page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {selectedCategory ? (
         /* VISUALIZAÇÃO DE FILTRO POR CATEGORIA */
         <div style={{ marginTop: '30px', marginBottom: '40px' }}>

@@ -66,10 +66,14 @@ export default async function RootLayout({
           <div className="topbar-scroll">
             <div className="ticker-wrap">
               {tickerItems.map((text, idx) => (
-                <span key={idx}>{text}</span>
+                <span key={idx}>
+                  <span style={{ color: 'var(--red)', marginRight: '8px' }}>•</span>{text}
+                </span>
               ))}
               {tickerItems.map((text, idx) => (
-                <span key={`rep-${idx}`}>{text}</span>
+                <span key={`rep-${idx}`} aria-hidden="true">
+                  <span style={{ color: 'var(--red)', marginRight: '8px' }}>•</span>{text}
+                </span>
               ))}
             </div>
           </div>

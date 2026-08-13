@@ -72,8 +72,7 @@ a {
 }
 
 .ticker-wrap span::before {
-  content: '— ';
-  color: var(--red);
+  content: none;
 }
 
 @keyframes tick {
