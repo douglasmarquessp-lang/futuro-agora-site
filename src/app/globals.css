@@ -29,6 +29,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -755,6 +760,90 @@ nav {
 
 .col-main {
   border-right: 2.5px solid var(--ink);
+  min-width: 0;
+}
+
+/* ARTICLE CONTENT & RESPONSIVE TYPOGRAPHY */
+.article-col {
+  padding: 30px;
+  background: #fff;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.article-title {
+  font-size: 3rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.article-excerpt {
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.article-content {
+  font-size: 1.05rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Ensure all text elements inside article content wrap cleanly */
+.article-content p,
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.article-content li,
+.article-content blockquote,
+.article-content span,
+.article-content div {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Links inside article content wrap long URLs safely */
+.article-content a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Fluid media inside article content and article container */
+.article-content img,
+.article-col img {
+  max-width: 100% !important;
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.article-content iframe,
+.article-content video,
+.article-content embed,
+.article-content object {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Tables and code blocks handling */
+.article-content table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
+}
+
+.article-content pre,
+.article-content code {
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .col-head {
@@ -1186,11 +1275,20 @@ footer {
   .feat-title { font-size: 2rem; }
   .two-col { grid-template-columns: 1fr; }
   .col-main { border-right: none; }
+  .article-col { padding: 20px; }
+  .article-title { font-size: 2.2rem; }
+  .article-excerpt { font-size: 1rem; }
+  .article-content { font-size: 1rem; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .footer-bot { flex-direction: column; gap: 8px; text-align: center; }
 }
 
 @media(max-width:560px) {
+  .page { padding: 0 12px; }
+  .article-col { padding: 16px 14px; }
+  .article-title { font-size: 1.75rem; }
+  .article-excerpt { font-size: 0.95rem; }
+  .article-content { font-size: 0.95rem; }
   .trending-row { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   .hero-title { font-size: 1.75rem; }

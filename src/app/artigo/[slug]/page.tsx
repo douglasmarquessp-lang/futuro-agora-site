@@ -250,16 +250,16 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       </div>
 
       <div className="two-col">
-        <div className="col-main" style={{ padding: '30px', background: '#fff' }}>
+        <div className="col-main article-col">
           <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--red)', textTransform: 'uppercase', letterSpacing: '1px' }}>
             {article.category}
           </span>
-          <h1 style={{ fontFamily: 'var(--font-bebas)', fontSize: '3rem', lineHeight: '1.1', marginTop: '10px', marginBottom: '15px' }}>
+          <h1 className="article-title" style={{ fontFamily: 'var(--font-bebas)', lineHeight: '1.1', marginTop: '10px', marginBottom: '15px' }}>
             {article.title}
           </h1>
           
           {/* Exibição do Autor, Data e Tempo de Leitura Otimizados */}
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '20px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
             <span>Por {article.authorName || 'Douglas Marques'}</span>
             <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--red)' }}></div>
             <span>{new Date(article.createdAt).toLocaleDateString('pt-BR')}</span>
@@ -267,12 +267,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <span>{article.readTime}</span>
           </div>
 
-          <p style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', fontSize: '1.1rem', color: 'var(--muted)', marginBottom: '30px', borderLeft: '3px solid var(--red)', paddingLeft: '15px' }}>
+          <p className="article-excerpt" style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', color: 'var(--muted)', marginBottom: '30px', borderLeft: '3px solid var(--red)', paddingLeft: '15px' }}>
             {article.excerpt}
           </p>
 
           <div
-            style={{ fontFamily: 'var(--font-lora)', fontSize: '1.05rem', lineHeight: '1.8', color: 'var(--ink)' }}
+            className="article-content"
+            style={{ fontFamily: 'var(--font-lora)', lineHeight: '1.8', color: 'var(--ink)' }}
             dangerouslySetInnerHTML={{ __html: formatArticleContent(article.content.replace(/\n/g, '<br />'), article.title) }}
           />
 
